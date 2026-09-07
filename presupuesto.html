@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Data - Generador de Presupuestos</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f6f9; }
+        .container { max-width: 850px; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: auto; }
+        h1, h2 { color: #004481; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
+        label { font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px; }
+        input, textarea { width: 100%; padding: 8px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #004481; color: white; }
+        .btn { background-color: #004481; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; margin-top: 15px; }
+        .btn-add { background-color: #28a745; }
+        .btn-remove { background-color: #dc3545; padding: 5px 10px; font-size: 12px; }
+        .btn-pdf { background-color: #d92525; float: right; }
+        .btn:hover { opacity: 0.9; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            input, textarea { border: none; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>GRUPO DATA | Obras Eléctricas</h1>
+    <h2>Carga de Presupuesto</h2>
+    
+    <form id="presupuestoForm">
+        <!-- Datos de Cabecera -->
+        <div class="grid">
+            <div>
+                <label>Cliente:</label>
+                <input type="text" id="cliente" required>
+            </div>
+            <div>
+                <label>Presupuesto N.°:</label>
+                <input type="text" id="numPresupuesto" required>
+            </div>
+            <div>
+                <label>Obra:</label>
+                <input type="text" id="obra">
+            </div>
+            <div>
+                <label>Fecha:</label>
+                <input type="date" id="fecha">
+            </div>
+            <div>
+                <label>Lugar:</label>
+                <input type="text" id="lugar">
+            </div>
+            <div>
+                <label>Validez del Presupuesto:</label>
+                <input type="text" id="validez" placeholder="Ej: 15 días">
+            </div>
+        </div>
+
+        <!-- Tabla de Ítems -->
+        <h3>Ítems del Presupuesto</h3>
+        <table id="tablaItems">
+            <thead>
+                <tr>
+                    <th style="width: 8%;">Ítem</th>
+                    <th>Descripción</th>
+                    <th style="width: 15%;">Cant.</th>
+                    <th style="width: 15%;">Unidad</th>
+                    <th class="no-print" style="width: 10%;">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoTabla">
+                <tr>
+                    <td class="item-index">1</td>
+                    <td><input type="text" name="descripcion"></td>
+                    <td><input type="number" name="cantidad"></td>
+                    <td><input type="text" name="unidad"></td>
+                    <td class="no-print"><button type="button" class="btn btn-remove" onclick="eliminarFila(this)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-add no-print" onclick="agregarFila()">+ Agregar Ítem</button>
+
+        <!-- Condiciones -->
+        <div style="margin-top:20px;">
+            <label>Observaciones:</label>
+            <textarea id="observaciones" rows="3"></textarea>
+            
+            <div class="grid" style="margin-top:10px;">
+                <div>
+                    <label>Plazo de Ejecución:</label>
+                    <input type="text" id="plazo">
+                </div>
+                <div>
+                    <label>Forma de Pago:</label>
+                    <input type="text" id="formaPago">
+                </div>
+            </div>
+
+            <label>TOTAL PRESUPUESTO ($):</label>
+            <input type="text" id="totalPresupuesto" style="font-weight:bold; font-size:18px;">
+        </div>
+
+        <button type="button" class="btn btn-pdf no-print" onclick="imprimirPDF()">Generar / Guardar PDF</button>
+    </form>
+</div>
+
+<script>
+    function agregarFila() {
+        const tbody = document.getElementById("cuerpoTabla");
+        const totalFilas = tbody.rows.length + 1;
+        
+        const nuevaFila = document.createElement("tr");
+        nuevaFila.innerHTML = `
+            <td class="item-index">${totalFilas}</td>
+            <td><input type="text" name="descripcion"></td>
+            <td><input type="number" name="cantidad"></td>
+            <td><input type="text" name="unidad"></td>
+            <td class="no-print"><button type="button" class="btn btn-remove" onclick="eliminarFila(this)">X</button></td>
+        `;
+        tbody.appendChild(nuevaFila);
+    }
+
+    function eliminarFila(boton) {
+        const fila = boton.parentElement.parentElement;
+        fila.remove();
+        reestructurarIndices();
+    }
+
+    function reestructurarIndices() {
+        const filas = document.querySelectorAll("#cuerpoTabla tr");
+        filas.forEach((fila, index) => {
+            fila.querySelector(".item-index").textContent = index + 1;
+        });
+    }
+
+    function imprimirPDF() {
+        window.print();
+    }
+</script>
+
+</body>
+</html>
