@@ -12,7 +12,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f0f4f8;
+            background: #f2f7f7;
             color: #333;
             min-height: 100vh;
             display: flex;
@@ -22,16 +22,27 @@
 
         /* Encabezado Principal */
         header {
-            background: linear-gradient(135deg, #002b5b 0%, #004481 100%);
-            color: white;
-            padding: 30px 20px;
+            background: #ffffff;
+            padding: 25px 20px;
             text-align: center;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            border-bottom: 4px solid #d92525;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            border-bottom: 4px solid #0097a7;
         }
 
-        .header-title { font-size: 28px; font-weight: 700; letter-spacing: 1px; margin-bottom: 5px; }
-        .header-subtitle { font-size: 14px; opacity: 0.85; font-weight: 400; }
+        .logo-img {
+            max-width: 320px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 5px;
+        }
+
+        .header-subtitle {
+            font-size: 13px;
+            color: #666;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
 
         /* Contenedor del Menú */
         .main-container {
@@ -43,10 +54,10 @@
 
         .section-title {
             text-align: center;
-            color: #002b5b;
+            color: #00796b;
             font-size: 20px;
             margin-bottom: 30px;
-            position: relative;
+            font-weight: 600;
         }
 
         .cards-grid {
@@ -62,9 +73,9 @@
             padding: 30px 20px;
             text-decoration: none;
             color: #333;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.04);
             transition: all 0.3s ease;
-            border: 1px solid #e2e8f0;
+            border: 1px solid #e0f2f1;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -78,21 +89,21 @@
             position: absolute;
             top: 0; left: 0; right: 0;
             height: 5px;
-            background: #004481;
+            background: #0097a7;
             transition: height 0.3s ease;
         }
 
         .card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.12);
+            box-shadow: 0 12px 25px rgba(0, 151, 167, 0.15);
         }
 
         .card:hover::before { height: 8px; }
 
         /* Variaciones de Color por Sección */
-        .card-presupuesto::before { background: #004481; }
-        .card-orden::before { background: #d92525; }
-        .card-mano-obra::before { background: #28a745; }
+        .card-presupuesto::before { background: #0097a7; }
+        .card-orden::before { background: #e53935; }
+        .card-mano-obra::before { background: #00796b; }
 
         .card-icon {
             width: 70px;
@@ -108,11 +119,11 @@
 
         .card:hover .card-icon { transform: scale(1.1); }
 
-        .card-presupuesto .card-icon { background: #e6f0fa; color: #004481; }
-        .card-orden .card-icon { background: #fde8e8; color: #d92525; }
-        .card-mano-obra .card-icon { background: #e8f7ed; color: #28a745; }
+        .card-presupuesto .card-icon { background: #e0f7fa; color: #0097a7; }
+        .card-orden .card-icon { background: #ffebee; color: #e53935; }
+        .card-mano-obra .card-icon { background: #e0f2f1; color: #00796b; }
 
-        .card h3 { font-size: 18px; color: #002b5b; margin-bottom: 10px; }
+        .card h3 { font-size: 18px; color: #004d40; margin-bottom: 10px; }
         .card p { font-size: 13px; color: #666; line-height: 1.5; }
 
         /* Pie de Página */
@@ -120,17 +131,20 @@
             text-align: center;
             padding: 20px;
             font-size: 12px;
-            color: #777;
-            background: #e2e8f0;
+            color: #555;
+            background: #e0f2f1;
             margin-top: auto;
+            border-top: 1px solid #b2dfdb;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="header-title"><i class="fa-solid fa-bolt" style="color: #f1c40f;"></i> GRUPO DATA</div>
-        <div class="header-subtitle">OBRAS ELÉCTRICAS — SISTEMA DE GESTIÓN</div>
+        <!-- Si subes el archivo a GitHub como logo.png se mostrará la imagen; de lo contrario usará el texto -->
+        <img src="logo.png" alt="GRUPO DATA Obras Eléctricas" class="logo-img" onerror="this.style.display='none'; document.getElementById('alt-title').style.display='block';">
+        <h1 id="alt-title" style="display:none; color:#0097a7; font-size: 28px;">GRUPO DATA</h1>
+        <div class="header-subtitle">Sistema de Gestión e Informes</div>
     </header>
 
     <div class="main-container">
