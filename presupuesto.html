@@ -28,14 +28,15 @@
         .form-group { display: flex; flex-direction: column; gap: 5px; }
         .form-group label { font-size: 12px; font-weight: 700; color: #555; text-transform: uppercase; }
         .form-group input, .form-group textarea { padding: 8px 12px; border: 1px solid #ccc; border-radius: 4px; font-size: 14px; }
-        
+        .form-group input:focus, .form-group textarea:focus { border-color: #0097a7; outline: none; }
+
         .btn { padding: 10px 18px; border: none; border-radius: 5px; font-weight: 700; cursor: pointer; transition: background 0.2s; display: inline-flex; align-items: center; gap: 8px; }
         .btn-primary { background: #0097a7; color: white; }
         .btn-primary:hover { background: #00796b; }
         .btn-success { background: #28a745; color: white; margin-top: 10px; }
         .btn-danger { background: #e53935; color: white; padding: 5px 8px; font-size: 12px; }
 
-        /* Contenedor PDF / Impresión */
+        /* Documento de Presupuesto (Vista / Impresión) */
         .pdf-container {
             width: 210mm;
             min-height: 297mm;
@@ -51,14 +52,14 @@
         .pdf-header { display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 3px solid #0097a7; padding-bottom: 12px; margin-bottom: 15px; }
         .header-left img { max-width: 220px; height: auto; }
         .header-right { text-align: right; }
-        .header-right h1 { color: #0097a7; font-size: 24px; font-weight: 700; }
-        .header-right p { font-size: 13px; color: #555; }
+        .header-right h1 { color: #0097a7; font-size: 26px; font-weight: 700; letter-spacing: 1px; }
+        .header-right p { font-size: 13px; color: #555; margin-top: 2px; }
 
         .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #f8fbfb; border: 1px solid #e0f2f1; border-radius: 6px; padding: 12px; margin-bottom: 20px; font-size: 13px; }
         .info-item span { font-weight: 700; color: #00796b; }
 
         .pdf-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 12px; }
-        .pdf-table th { background: #0097a7; color: white; padding: 8px 10px; text-align: left; }
+        .pdf-table th { background: #0097a7; color: white; padding: 8px 10px; text-align: left; font-weight: 600; }
         .pdf-table td { padding: 8px 10px; border-bottom: 1px solid #eee; }
         .pdf-table tr:nth-child(even) { background: #fafafa; }
         
@@ -89,75 +90,75 @@
 </head>
 <body>
 
-    <!-- Formulario de Entrada de Datos -->
+    <!-- Formulario de Carga (Campos Vacíos) -->
     <div class="editor-container no-print">
-        <h2 class="editor-title"><i class="fa-solid fa-pen-to-square"></i> Carga de Presupuesto</h2>
+        <h2 class="editor-title"><i class="fa-solid fa-pen-to-square"></i> Generar Presupuesto</h2>
         
-        <!-- Datos Principales -->
+        <!-- Encabezado y Datos del Cliente -->
         <div class="form-grid">
             <div class="form-group">
                 <label>Nº Presupuesto</label>
-                <input type="text" id="in-numero" value="0001-00000042" oninput="actualizarComprobante()">
+                <input type="text" id="in-numero" placeholder="Ej. 0001-00000001" oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Fecha</label>
                 <input type="date" id="in-fecha" onchange="actualizarComprobante()">
             </div>
             <div class="form-group">
-                <label>Validez</label>
-                <input type="text" id="in-validez" value="15 días" oninput="actualizarComprobante()">
+                <label>Validez del Presupuesto</label>
+                <input type="text" id="in-validez" placeholder="Ej. 15 días" oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Cliente</label>
-                <input type="text" id="in-cliente" value="Juan Pérez" oninput="actualizarComprobante()">
+                <input type="text" id="in-cliente" placeholder="Nombre / Razon Social" oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Obra</label>
-                <input type="text" id="in-obra" value="Instalación Eléctrica Industrial" oninput="actualizarComprobante()">
+                <input type="text" id="in-obra" placeholder="Descripción de la obra" oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Lugar</label>
-                <input type="text" id="in-lugar" value="Santa Fe Capital, Argentina" oninput="actualizarComprobante()">
+                <input type="text" id="in-lugar" placeholder="Dirección / Localidad" oninput="actualizarComprobante()">
             </div>
         </div>
 
         <!-- Carga de Ítems -->
-        <h3 style="font-size: 14px; margin-bottom: 10px; color: #00796b;">Añadir Ítems a la Cotización</h3>
+        <h3 style="font-size: 14px; margin-bottom: 10px; color: #00796b;">Añadir Ítems</h3>
         <div class="form-grid" style="grid-template-columns: 2fr 1fr 1fr 1fr auto;">
             <div class="form-group">
                 <label>Descripción</label>
-                <input type="text" id="item-desc" placeholder="Ej. Montaje de tablero">
+                <input type="text" id="item-desc" placeholder="Detalle del trabajo o insumo">
             </div>
             <div class="form-group">
                 <label>Cantidad</label>
-                <input type="number" id="item-cant" value="1">
+                <input type="number" id="item-cant" placeholder="0">
             </div>
             <div class="form-group">
                 <label>Unidad</label>
-                <input type="text" id="item-uni" value="Unid">
+                <input type="text" id="item-uni" placeholder="Ej. Unid, Mts">
             </div>
             <div class="form-group">
                 <label>P. Unitario ($)</label>
-                <input type="number" id="item-precio" placeholder="0">
+                <input type="number" id="item-precio" placeholder="0.00">
             </div>
             <div class="form-group" style="justify-content: flex-end;">
                 <button class="btn btn-success" onclick="agregarItem()"><i class="fa-solid fa-plus"></i></button>
             </div>
         </div>
 
-        <!-- Condiciones -->
+        <!-- Condiciones Adicionales -->
         <div class="form-grid" style="margin-top: 15px;">
             <div class="form-group">
                 <label>Observaciones</label>
-                <input type="text" id="in-obs" value="Los materiales cotizados cumplen con las normas IRAM vigentes." oninput="actualizarComprobante()">
+                <input type="text" id="in-obs" placeholder="Aclaraciones, normas, etc." oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Plazo de Ejecución</label>
-                <input type="text" id="in-plazo" value="10 días hábiles a partir de la firma de conformidad." oninput="actualizarComprobante()">
+                <input type="text" id="in-plazo" placeholder="Ej. 10 días hábiles" oninput="actualizarComprobante()">
             </div>
             <div class="form-group">
                 <label>Forma de Pago</label>
-                <input type="text" id="in-pago" value="50% de anticipo y 50% al finalizar la obra." oninput="actualizarComprobante()">
+                <input type="text" id="in-pago" placeholder="Ej. 50% anticipo, 50% al finalizar" oninput="actualizarComprobante()">
             </div>
         </div>
 
@@ -166,7 +167,7 @@
         </div>
     </div>
 
-    <!-- Vista Previa / Documento Final -->
+    <!-- Documento PDF en Vista Previa -->
     <div class="pdf-container">
         <div>
             <div class="pdf-header">
@@ -176,15 +177,15 @@
                 <div class="header-right">
                     <h1>PRESUPUESTO</h1>
                     <p><strong>Fecha:</strong> <span id="out-fecha">--/--/----</span></p>
-                    <p><strong>Presupuesto N.º:</strong> <span id="out-numero">0001-00000042</span></p>
-                    <p><strong>Validez:</strong> <span id="out-validez">15 días</span></p>
+                    <p><strong>Presupuesto N.º:</strong> <span id="out-numero">----</span></p>
+                    <p><strong>Validez:</strong> <span id="out-validez">----</span></p>
                 </div>
             </div>
 
             <div class="info-grid">
-                <div class="info-item"><span>Cliente:</span> <span id="out-cliente">Juan Pérez</span></div>
-                <div class="info-item"><span>Obra:</span> <span id="out-obra">Instalación Eléctrica Industrial</span></div>
-                <div class="info-item"><span>Lugar:</span> <span id="out-lugar">Santa Fe Capital, Argentina</span></div>
+                <div class="info-item"><span>Cliente:</span> <span id="out-cliente">----</span></div>
+                <div class="info-item"><span>Obra:</span> <span id="out-obra">----</span></div>
+                <div class="info-item"><span>Lugar:</span> <span id="out-lugar">----</span></div>
             </div>
 
             <table class="pdf-table">
@@ -200,7 +201,7 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-items">
-                    <!-- Ítems agregados dinámicamente -->
+                    <!-- Ítems se agregan aquí -->
                 </tbody>
             </table>
         </div>
@@ -210,15 +211,15 @@
                 <div class="conditions-box">
                     <div class="cond-block">
                         <div class="cond-title">Observaciones</div>
-                        <p id="out-obs">Los materiales cotizados cumplen con las normas IRAM vigentes.</p>
+                        <p id="out-obs">----</p>
                     </div>
                     <div class="cond-block">
                         <div class="cond-title">Plazo de Ejecución</div>
-                        <p id="out-plazo">10 días hábiles a partir de la firma de conformidad.</p>
+                        <p id="out-plazo">----</p>
                     </div>
                     <div class="cond-block">
                         <div class="cond-title">Forma de Pago</div>
-                        <p id="out-pago">50% de anticipo y 50% al finalizar la obra.</p>
+                        <p id="out-pago">----</p>
                     </div>
                 </div>
 
@@ -243,32 +244,26 @@
     </div>
 
     <script>
-        let items = [
-            { desc: "Montaje de tablero principal de distribución.", cant: 1, uni: "Unid", precio: 150000 },
-            { desc: "Tendido de cableado estructurado.", cant: 120, uni: "Metros", precio: 2500 }
-        ];
-
-        // Establecer fecha actual por defecto
-        document.getElementById('in-fecha').valueAsDate = new Date();
+        let items = [];
 
         function actualizarComprobante() {
-            document.getElementById('out-numero').innerText = document.getElementById('in-numero').value;
+            document.getElementById('out-numero').innerText = document.getElementById('in-numero').value || '----';
             
             const fechaVal = document.getElementById('in-fecha').value;
             if(fechaVal) {
                 const [y, m, d] = fechaVal.split('-');
                 document.getElementById('out-fecha').innerText = `${d}/${m}/${y}`;
+            } else {
+                document.getElementById('out-fecha').innerText = '--/--/----';
             }
 
-            document.getElementById('out-validez').innerText = document.getElementById('in-validez').value;
-            document.getElementById('out-cliente').innerText = document.getElementById('in-cliente').value;
-            document.getElementById('out-obra').innerText = document.getElementById('in-obra').value;
-            document.getElementById('out-lugar').innerText = document.getElementById('in-lugar').value;
-            document.getElementById('out-obs').innerText = document.getElementById('in-obs').value;
-            document.getElementById('out-plazo').innerText = document.getElementById('in-plazo').value;
-            document.getElementById('out-pago').innerText = document.getElementById('in-pago').value;
-            
-            renderizarTabla();
+            document.getElementById('out-validez').innerText = document.getElementById('in-validez').value || '----';
+            document.getElementById('out-cliente').innerText = document.getElementById('in-cliente').value || '----';
+            document.getElementById('out-obra').innerText = document.getElementById('in-obra').value || '----';
+            document.getElementById('out-lugar').innerText = document.getElementById('in-lugar').value || '----';
+            document.getElementById('out-obs').innerText = document.getElementById('in-obs').value || '----';
+            document.getElementById('out-plazo').innerText = document.getElementById('in-plazo').value || '----';
+            document.getElementById('out-pago').innerText = document.getElementById('in-pago').value || '----';
         }
 
         function renderizarTabla() {
@@ -311,7 +306,10 @@
 
             items.push({ desc, cant, uni, precio });
             document.getElementById('item-desc').value = '';
+            document.getElementById('item-cant').value = '';
+            document.getElementById('item-uni').value = '';
             document.getElementById('item-precio').value = '';
+            
             renderizarTabla();
         }
 
@@ -319,9 +317,6 @@
             items.splice(index, 1);
             renderizarTabla();
         }
-
-        // Inicializar
-        actualizarComprobante();
     </script>
 </body>
 </html>
