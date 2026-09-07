@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grupo Data - Detalle de Mano de Obra</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f6f9; }
+        .container { max-width: 900px; background: #fff; padding: 25px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); margin: auto; }
+        h1, h2 { color: #003366; margin-bottom: 5px; }
+        .subtitle-input { width: 100%; font-weight: bold; text-transform: uppercase; text-align: center; font-size: 13px; margin-bottom: 20px; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
+        label { font-weight: bold; font-size: 13px; display: block; margin-bottom: 4px; }
+        input, textarea { width: 100%; padding: 6px; box-sizing: border-box; border: 1px solid #ccc; border-radius: 4px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 6px; text-align: left; }
+        th { background-color: #003366; color: white; }
+        .btn { background-color: #003366; color: white; padding: 10px 18px; border: none; border-radius: 4px; cursor: pointer; font-size: 15px; margin-top: 15px; }
+        .btn-add { background-color: #28a745; }
+        .btn-remove { background-color: #dc3545; padding: 4px 8px; font-size: 12px; }
+        .btn-pdf { background-color: #d92525; float: right; }
+        .total-box { background-color: #f8f9fa; border: 2px solid #003366; padding: 15px; text-align: center; border-radius: 6px; }
+        
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; }
+            .container { box-shadow: none; padding: 0; max-width: 100%; }
+            input, textarea { border: none; background: transparent; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h1>GRUPO DATA | Obras Eléctricas</h1>
+        <a href="index.html" class="no-print" style="text-decoration: none; font-weight: bold; color: #003366;">← Volver al Panel</a>
+    </div>
+    <h2>DETALLE DE MANO DE OBRA</h2>
+    
+    <form id="manoObraForm">
+        <input type="text" class="subtitle-input" placeholder="DESCRIPCIÓN GENERAL / TÍTULO DEL TRABAJO">
+
+        <!-- Cabecera -->
+        <div class="grid">
+            <div>
+                <label>Cliente:</label>
+                <input type="text" id="cliente" placeholder="Nombre del cliente">
+                <label style="margin-top:8px;">Obra:</label>
+                <input type="text" id="obra" placeholder="Nombre o tipo de obra">
+                <label style="margin-top:8px;">Lugar:</label>
+                <input type="text" id="lugar" placeholder="Ubicación / Ciudad">
+            </div>
+            <div>
+                <label>Fecha:</label>
+                <input type="date" id="fecha">
+                <label style="margin-top:8px;">Presupuesto N.°:</label>
+                <input type="text" id="numPresupuesto" placeholder="Ej: GD-2026-0001">
+                <label style="margin-top:8px;">Validez del presupuesto:</label>
+                <input type="text" id="validez" placeholder="Ej: 15 días">
+            </div>
+        </div>
+
+        <!-- Tabla de Tareas -->
+        <h3>Tareas / Ítems</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 8%;">Ítem</th>
+                    <th>Descripción</th>
+                    <th style="width: 12%;">Cant.</th>
+                    <th style="width: 15%;">Unidad</th>
+                    <th class="no-print" style="width: 10%;">Acción</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpoManoObra">
+                <tr>
+                    <td class="item-index">1</td>
+                    <td><input type="text" placeholder="Descripción del trabajo"></td>
+                    <td><input type="number" placeholder="1"></td>
+                    <td><input type="text" placeholder="Ej: Global, m, unid"></td>
+                    <td class="no-print"><button type="button" class="btn btn-remove" onclick="eliminarFila(this)">X</button></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-add no-print" onclick="agregarFila()">+ Agregar Ítem</button>
+
+        <!-- Observaciones y Totales -->
+        <div class="grid" style="margin-top:20px; grid-template-columns: 1.2fr 0.8fr;">
+            <div>
+                <label>OBSERVACIONES:</label>
+                <textarea id="observaciones" rows="5" placeholder="Anotaciones o condiciones especiales..."></textarea>
+            </div>
+            <div class="total-box">
+                <label style="color:#003366; font-size:14px;">TOTAL MANO DE OBRA</label>
+                <input type="text" id="montoTotal" placeholder="$ 0,00" style="font-size:20px; font-weight:bold; text-align:center; color:#003366; margin:8px 0;">
+                <input type="text" id="montoLetras" placeholder="(MONTO EN LETRAS)" style="text-align:center; font-size:11px;">
+            </div>
+        </div>
+
+        <div class="grid" style="margin-top:10px;">
+            <div>
+                <label>PLAZO DE EJECUCIÓN:</label>
+                <input type="text" id="plazo" placeholder="Ej: 10 días hábiles">
+            </div>
+            <div>
+                <label>FORMA DE PAGO:</label>
+                <input type="text" id="formaPago" placeholder="Ej: Transferencia / Contado">
+            </div>
+        </div>
+
+        <button type="button" class="btn btn-pdf no-print" onclick="window.print()">Generar / Guardar PDF</button>
+    </form>
+</div>
+
+<script>
+    function agregarFila() {
+        const tbody = document.getElementById("cuerpoManoObra");
+        const total = tbody.rows.length + 1;
+        const fila = document.createElement("tr");
+        fila.innerHTML = `
+            <td class="item-index">${total}</td>
+            <td><input type="text" placeholder="Descripción del trabajo"></td>
+            <td><input type="number" placeholder="1"></td>
+            <td><input type="text" placeholder="Ej: Global"></td>
+            <td class="no-print"><button type="button" class="btn btn-remove" onclick="eliminarFila(this)">X</button></td>
+        `;
+        tbody.appendChild(fila);
+    }
+
+    function eliminarFila(btn) {
+        btn.parentElement.parentElement.remove();
+        document.querySelectorAll("#cuerpoManoObra tr").forEach((tr, i) => {
+            tr.querySelector(".item-index").textContent = i + 1;
+        });
+    }
+</script>
+
+</body>
+</html>
