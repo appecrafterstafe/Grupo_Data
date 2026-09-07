@@ -11,14 +11,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-<!-- Botón a añadir en la barra de acciones -->
-<button class="btn" style="background:#4285F4; color:white;" onclick="guardarEnDrive()">
-    <i class="fa-brands fa-google-drive"></i> Guardar en Google Drive
-</button>
-
 <script>
   // Reemplaza con tu Client ID de Google Cloud
-  const CLIENT_ID = '606486196456-m8tc1glftg17p2it5oja2rcrdvkafkm9.apps.googleusercontent.com.apps.googleusercontent.com';
+  const CLIENT_ID = '606486196456-m8tc1glftg17p2it5oja2rcrdvkafkm9.apps.googleusercontent.com';
   const SCOPES = 'https://www.googleapis.com/auth/drive.file';
 
   let tokenClient;
@@ -340,6 +335,10 @@
         </div>
     </div>
 
+    <button class="btn" style="background:#4285F4; color:white;" onclick="guardarEnDrive()">
+    <i class="fa-brands fa-google-drive"></i> Guardar en Google Drive
+</button>
+    
     <!-- Documento PDF en Vista Previa -->
     <div class="pdf-container">
         <div>
