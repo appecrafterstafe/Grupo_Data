@@ -397,7 +397,7 @@ async function subirPdfACarpeta(folderId, accessToken) {
     const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
     
     const metadata = {
-      name: `Presupuesto_${document.getElementById('docNumero').value || 'Sin_Numero'}.pdf`,
+      name: `Presupuesto_${document.getElementById('in-numero').value || 'Sin_Numero'}.pdf`,
       mimeType: 'application/pdf',
       parents: [folderId]
     };
