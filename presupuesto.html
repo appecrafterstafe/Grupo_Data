@@ -375,7 +375,7 @@ async function pickerCallback(data, accessToken) {
 }
 
 async function subirPdfACarpeta(folderId, accessToken) {
-  const element = document.getElementById('presupuesto-documento');
+  const element = document.querySelector('.pdf-container');
   
   const opt = {
     margin: 0,
@@ -422,7 +422,6 @@ async function subirPdfACarpeta(folderId, accessToken) {
     alert('Error al generar o subir el PDF.');
   }
 }
-        }
 
         async function subirPDFADrive() {
             const elemento = document.querySelector('.pdf-container');
