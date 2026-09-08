@@ -378,20 +378,18 @@ async function subirPdfACarpeta(folderId, accessToken) {
   const element = document.querySelector('.pdf-container');
   
   const opt = {
-    margin: 0,
-    filename: 'Presupuesto.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { 
-      scale: 2,
-      useCORS: true,
-      scrollY: 0,
-      scrollX: 0,
-      windowWidth: element.scrollWidth
-    },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-    pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
-  };
-
+  margin: 0,
+  filename: 'Presupuesto.pdf',
+  image: { type: 'jpeg', quality: 0.98 },
+  html2canvas: { 
+    scale: 2,
+    useCORS: true,
+    scrollY: 0,
+    scrollX: 0
+  },
+  jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+  pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+};
 
   try {
     const pdfBlob = await html2pdf().set(opt).from(element).output('blob');
